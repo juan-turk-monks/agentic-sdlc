@@ -77,6 +77,7 @@ safe-outputs:
     allowed: ["agent:planning"]
   create-pull-request:
     branch-prefix: "spec/"
+    draft: false
     title-prefix: "[spec] "
     labels: ["agent:planning", "spec"]
     auto-close-issue: false
