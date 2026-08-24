@@ -33,7 +33,7 @@ app builds, lints, and behaves correctly in the dev server.
 
 #### T1: Create the Counter client component
 
-- [ ] Implement T1
+- [x] Implement T1
 - Description: Add `app/components/Counter.tsx` as a `"use client"`
   component that holds an integer count in `useState` (initialized to 0)
   and renders the current value plus increment and decrement buttons that
