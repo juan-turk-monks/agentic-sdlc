@@ -16,6 +16,7 @@ on:
 permissions:
   contents: read
   issues: read
+  copilot-requests: write
 
 skills:
   - .github/skills/spec-driven-development
