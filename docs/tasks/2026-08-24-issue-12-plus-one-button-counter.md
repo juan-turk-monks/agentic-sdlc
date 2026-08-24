@@ -38,7 +38,7 @@ behavior RED before implementing it, then GREEN afterward.
 
 #### T1: Add Playwright end-to-end test setup
 
-- [ ] Implement T1
+- [x] Implement T1
 - Description: Add `@playwright/test` as a devDependency, create a root
   `playwright.config.ts` that starts the app (`pnpm build && pnpm start`, or
   `pnpm dev`) on a test port and runs specs from `e2e/`, and install the
@@ -57,7 +57,7 @@ behavior RED before implementing it, then GREEN afterward.
 
 #### T2: Write RED end-to-end test for the counter button
 
-- [ ] Implement T2
+- [x] Implement T2
 - Description: Add `e2e/counter.spec.ts` that navigates to the homepage,
   asserts exactly one `<button>` exists, asserts its initial text is `0`,
   asserts the text becomes `1` then `2` after one and two clicks respectively,
@@ -77,7 +77,7 @@ behavior RED before implementing it, then GREEN afterward.
 
 ### Checkpoint: Test infrastructure
 
-- [ ] Required focused verification passes (T1 config loads; T2 fails as
+- [x] Required focused verification passes (T1 config loads; T2 fails as
       expected RED)
 - [ ] Human review is complete before continuing when the SPEC requires it
 
@@ -85,7 +85,7 @@ behavior RED before implementing it, then GREEN afterward.
 
 #### T3: Replace homepage content with a centered +1 counter button
 
-- [ ] Implement T3
+- [x] Implement T3
 - Description: Rewrite `app/page.tsx` as a `"use client"` component. Remove
   the existing Next.js/Vercel boilerplate (logo images, headline text,
   "Deploy Now"/"Documentation" links). Render a single container that centers
@@ -112,7 +112,7 @@ behavior RED before implementing it, then GREEN afterward.
 
 ### Checkpoint: Counter button implementation
 
-- [ ] Required focused verification passes (`pnpm exec playwright test
+- [x] Required focused verification passes (`pnpm exec playwright test
       e2e/counter.spec.ts` is GREEN)
 - [ ] Human review is complete before continuing when the SPEC requires it
 
@@ -120,7 +120,7 @@ behavior RED before implementing it, then GREEN afterward.
 
 #### T4: Run full lint, type-check, build, and e2e suite
 
-- [ ] Implement T4
+- [x] Implement T4
 - Description: Run the complete set of repository validation commands to
   confirm the change does not regress linting, type-checking, the production
   build, or the (currently single-file) Playwright suite.
