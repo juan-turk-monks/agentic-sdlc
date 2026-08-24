@@ -54,7 +54,12 @@ Issue + label "agent:plan"
                                  marca checkbox correspondiente en cada commit
                                       ├─ Bloqueo → comenta en el issue origen
                                       │            tagueándote (@creador-del-issue)
-                                      │            esperás resolución o indicás saltar
+                                      │            explica cómo resolverlo y aplicar
+                                      │            `agent:build-resume`
+                                      │                 └─> [WF3 · Build Resume]
+                                      │                      valida la resolución y
+                                      │                      reasigna Copilot sobre
+                                      │                      la misma rama `build/...`
                                       └─ Tn completa → abre 1 único PR hacia main
                                            → CI + tu aprobación → merge → issue se cierra
 ```
@@ -75,14 +80,18 @@ Issue + label "agent:plan"
 ## WF2 · Dispatcher (workflow liviano, casi sin IA)
 
 - **Trigger**: `push` a main filtrando `docs/specs/**`. Determinístico: el merge ES la señal.
-- **Trabajo**: leer el frontmatter del spec recién mergeado, recuperar el número de issue origen y asignarlo a **Copilot cloud** (`assign-to-user`). Es orquestación simple; acá el costo de IA debería ser mínimo o nulo.
+- **Trabajo**: leer el frontmatter del spec recién mergeado, recuperar el número de issue origen y asignarlo a **Copilot cloud** (`assign-to-agent`). Es orquestación simple; acá el costo de IA debería ser mínimo o nulo.
 - Nota: delegar en Copilot cloud implica que la ejecución pesada corre en infraestructura de GitHub, no en tus runners de Actions — solo pagás la asignación/orquestación.
 
 ## Ejecución · Copilot cloud agent
 
-- Trabaja en rama dedicada (`sdlc/<date>-issue-<number>-<slug>`), ejecuta las fases y tareas del checklist en orden estricto, un commit atómico por tarea, actualizando el checkbox en el propio commit.
+- Trabaja en rama dedicada (`build/<date>-issue-<number>-<slug>`), ejecuta las fases y tareas del checklist en orden estricto, un commit atómico por tarea, actualizando el checkbox en el propio commit.
 - **Recuperación ante fallos**: como las tareas viven en el repo y cada commit refleja el avance, cualquier reejecución (misma sesión de Copilot o re-asignación del issue) puede detectar la última tarea completada y continuar desde ahí. La fuente de verdad es el diff, nunca la conversación.
-- **Protocolo de bloqueo**: al trabarse en una tarea, comenta en el **issue origen** taggeando a quien lo creó (el frontmatter lo sabe), explica el bloqueo y pausa. Vos respondés en el issue: resolvés o indicás "saltear T4"; el agente continúa con el resto.
+- **Protocolo de bloqueo**: al trabarse en una tarea, comenta en el **issue origen** taggeando a quien lo creó, identifica la tarea y la resolución requerida, agrega `agent:build-blocked` y pausa. El comentario indica que debes responder en el Issue y aplicar `agent:build-resume`.
+- **Reanudación**: `Build Resume` exige el label `agent:build-blocked`, una
+  resolución humana posterior al bloqueo, el SPEC/tarea correspondiente y la
+  rama `build/...` existente antes de reasignar a Copilot. No crea una rama ni
+  un PR nuevos; consume únicamente el label `agent:build-resume`.
 - **Cierre**: completadas todas las tareas, abre **un único PR** hacia main con `Closes #N` referenciando el issue. CI corre, vos aprobás y mergeás; el issue se cierra automáticamente.
 - Los comentarios tuyos sobre ese PR también llegan a Copilot cloud, así que la iteración post-PR usa el canal estándar de GitHub.
 
