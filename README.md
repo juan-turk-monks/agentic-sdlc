@@ -61,7 +61,14 @@ Issue + label "agent:plan"
                                       │                      reasigna Copilot sobre
                                       │                      la misma rama `build/...`
                                       └─ Tn completa → abre 1 único PR hacia main
-                                           → CI + tu aprobación → merge → issue se cierra
+                                           ├─ Review aprobado → no hay acción; queda listo para merge
+                                           ├─ Review compatible → [WF4 · Build Review]
+                                           │                      actualiza la misma rama/PR
+                                           ├─ Review en conflicto con el SPEC → comenta en el Issue
+                                           │                         └─> excepción explícita +
+                                           │                              `agent:build-review-resume`
+                                           │                              actualiza la misma rama/PR
+                                           └─ CI + tu aprobación → merge → issue se cierra
 ```
 
 ## WF1 · Planner
@@ -92,6 +99,12 @@ Issue + label "agent:plan"
   resolución humana posterior al bloqueo, el SPEC/tarea correspondiente y la
   rama `build/...` existente antes de reasignar a Copilot. No crea una rama ni
   un PR nuevos; consume únicamente el label `agent:build-resume`.
+- **Review de implementación**: un `APPROVED` no ejecuta ninguna acción. Los
+  comentarios compatibles con el SPEC actualizan la misma rama/PR. Si un
+  comentario contradice el SPEC, `Build Review` no modifica código ni SPEC:
+  deja una nueva decisión en el Issue. Solo una excepción explícita seguida de
+  `agent:build-review-resume` puede actualizar ese mismo PR; un cambio de
+  requisitos de producto inicia un nuevo ciclo `agent:plan`.
 - **Cierre**: completadas todas las tareas, abre **un único PR** hacia main con `Closes #N` referenciando el issue. CI corre, vos aprobás y mergeás; el issue se cierra automáticamente.
 - Los comentarios tuyos sobre ese PR también llegan a Copilot cloud, así que la iteración post-PR usa el canal estándar de GitHub.
 
