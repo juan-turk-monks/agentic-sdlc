@@ -135,9 +135,26 @@ issue number, and short title in both names:
 - `docs/specs/<DATE>-issue-<ISSUE_NUMBER>-<SHORT_TITLE>.md`
 - `docs/tasks/<DATE>-issue-<ISSUE_NUMBER>-<SHORT_TITLE>.md`
 
+Both files MUST begin with this YAML frontmatter. Set `author` to the source
+Issue author's GitHub login without the `@` prefix:
+
+```yaml
+---
+issue: <ISSUE_NUMBER>
+status: planned
+author: <ISSUE_AUTHOR>
+---
+```
+
 The SPEC must use this structure:
 
 ```markdown
+---
+issue: <ISSUE_NUMBER>
+status: planned
+author: <ISSUE_AUTHOR>
+---
+
 # Spec: <short title>
 
 - Issue: #<ISSUE_NUMBER>
@@ -201,6 +218,12 @@ be specific enough to be marked complete in a later implementation commit. For
 example:
 
 ```markdown
+---
+issue: <ISSUE_NUMBER>
+status: planned
+author: <ISSUE_AUTHOR>
+---
+
 # Implementation Plan: <short title>
 
 - Issue: #<ISSUE_NUMBER>

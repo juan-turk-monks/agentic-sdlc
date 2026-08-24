@@ -1,3 +1,9 @@
+---
+issue: 6
+status: planned
+author: juan-turk-monks
+---
+
 # Spec: Add counter
 
 - Issue: #6
