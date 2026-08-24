@@ -6,6 +6,8 @@ on:
   pull_request_review:
     types: [submitted]
 
+if: github.event.review.state != 'approved'
+
 permissions:
   contents: read
   issues: read
