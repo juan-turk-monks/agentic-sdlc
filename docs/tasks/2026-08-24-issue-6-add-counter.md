@@ -54,14 +54,14 @@ app builds, lints, and behaves correctly in the dev server.
 
 ### Checkpoint: Component ready
 
-- [ ] Required focused verification passes (`pnpm lint` on new file)
+- [x] Required focused verification passes (`pnpm lint` on new file)
 - [ ] Human review is complete before continuing when the SPEC requires it
 
 ### Phase 2: Integrate and verify
 
 #### T2: Render Counter on the home page
 
-- [ ] Implement T2
+- [x] Implement T2
 - Description: Import and render `Counter` inside `app/page.tsx`, placed
   within the existing layout so it displays alongside (or in place of) the
   current starter content, without adding a `"use client"` directive to
