@@ -80,7 +80,7 @@ app builds, lints, and behaves correctly in the dev server.
 
 #### T3: Full verification pass
 
-- [ ] Implement T3
+- [x] Implement T3
 - Description: Run the repository's lint and build commands end-to-end to
   confirm the change integrates cleanly with no regressions.
 - Acceptance criteria:
@@ -95,7 +95,7 @@ app builds, lints, and behaves correctly in the dev server.
 
 ### Checkpoint: Feature complete
 
-- [ ] Required focused verification passes (`pnpm lint`, `pnpm build`)
+- [x] Required focused verification passes (`pnpm lint`, `pnpm build`)
 - [ ] Human review is complete before continuing when the SPEC requires it
 
 ## Risks and Mitigations
