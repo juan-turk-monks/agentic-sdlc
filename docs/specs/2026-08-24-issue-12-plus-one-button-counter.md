@@ -99,6 +99,8 @@ custom CSS, no external UI library, and TypeScript with no `any`.
   - Exactly one button element renders on the homepage.
   - Its initial text is `0`.
   - After one click, its text is `1`; after a second click, `2`.
+  - Its computed background color is `#1f883d` (`rgb(31, 136, 61)`) and its
+    computed text color is white (`rgb(255, 255, 255)`) (SPEC R6).
 - Full suite command: `pnpm exec playwright test` (only one spec file exists
   after this change, so it is equivalent to the focused command).
 - Manual/complementary checks (do not replace the e2e test): `pnpm lint`,
@@ -139,6 +141,11 @@ custom CSS, no external UI library, and TypeScript with no `any`.
   static assets is out of scope.
 - R5: The homepage MUST contain exactly one `<button>` element and no other
   interactive controls.
+- R6: The button MUST have a background color of `#1f883d` and white text
+  (e.g. Tailwind arbitrary-value utilities `bg-[#1f883d] text-white`), per
+  product decision in the PR review of this plan (overrides the "Tailwind
+  utility classes consistent with existing styling" default color choice from
+  the Code Style section for this specific button).
 
 ## Success Criteria
 
@@ -148,5 +155,6 @@ custom CSS, no external UI library, and TypeScript with no `any`.
   with the text always matching the running total (R1, R3).
 - No other interactive or boilerplate content remains on the homepage (R4,
   R5).
+- The button's background is `#1f883d` with white text (R6).
 - `pnpm exec playwright test e2e/counter.spec.ts` passes; `pnpm lint`,
   `pnpm exec tsc --noEmit`, and `pnpm build` all succeed.

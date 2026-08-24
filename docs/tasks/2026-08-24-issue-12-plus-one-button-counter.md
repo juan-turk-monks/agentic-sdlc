@@ -59,13 +59,14 @@ behavior RED before implementing it, then GREEN afterward.
 
 - [ ] Implement T2
 - Description: Add `e2e/counter.spec.ts` that navigates to the homepage,
-  asserts exactly one `<button>` exists, asserts its initial text is `0`, and
-  asserts the text becomes `1` then `2` after one and two clicks respectively.
-  This test MUST fail against the current homepage (no such button exists),
-  proving RED before implementation.
+  asserts exactly one `<button>` exists, asserts its initial text is `0`,
+  asserts the text becomes `1` then `2` after one and two clicks respectively,
+  and asserts the button's computed background color is `#1f883d` with white
+  text. This test MUST fail against the current homepage (no such button
+  exists), proving RED before implementation.
 - Acceptance criteria:
   - Test file exists at `e2e/counter.spec.ts` and exercises exactly the
-    behavior described in SPEC R3 and R5.
+    behavior described in SPEC R3, R5, and R6.
   - Running the test against the unmodified `app/page.tsx` fails.
 - Verification:
   - `pnpm exec playwright test e2e/counter.spec.ts` fails (RED), with failure
@@ -92,7 +93,8 @@ behavior RED before implementing it, then GREEN afterward.
   `flex flex-1 items-center justify-center`) containing one `<button>` whose
   text is the current `count` state (initialized to `0`) and whose `onClick`
   handler increments `count` by 1 using `setCount((c) => c + 1)`. Style the
-  button with Tailwind classes consistent with existing conventions.
+  button with Tailwind utilities `bg-[#1f883d] text-white` (background
+  `#1f883d`, white text), per SPEC R6.
 - Acceptance criteria:
   - `app/page.tsx` contains exactly one `<button>` element and no leftover
     boilerplate markup (SPEC R4, R5).
@@ -100,6 +102,8 @@ behavior RED before implementing it, then GREEN afterward.
     exactly 1 per click (SPEC R1, R3).
   - The button is centered both horizontally and vertically on the page
     (SPEC R2).
+  - The button's background color is `#1f883d` and its text color is white
+    (SPEC R6).
 - Verification:
   - `pnpm exec playwright test e2e/counter.spec.ts` passes (GREEN).
 - Dependencies: T2
