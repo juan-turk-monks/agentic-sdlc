@@ -116,9 +116,19 @@ removed `agent:plan` before you started. Do not request either label change.
 ## Step 2 — Understand the issue
 
 1. Read the full issue: title, body, and all comments.
-2. Explore the repository to understand existing conventions, architecture, constraints and related code that this feature touches.
-3. Understand core features and acceptance criteria.
-4. Identify ambiguities or missing information. If critical details are
+2. Explore the repository to understand existing conventions, architecture,
+   constraints, test strategy, and related code that this feature touches.
+3. Understand core features and acceptance criteria. Every behavior change
+   requires an automated focused test using the repository's preferred level;
+   prefer integration or end-to-end coverage over adding an artificial unit
+   test. Manual checks, lint, type checking, and builds are complementary and
+   cannot replace the automated behavior test.
+4. If no suitable test runner exists, determine whether repository rules allow
+   adding the minimum integration or end-to-end test infrastructure. When that
+   dependency or testing-strategy decision requires human approval, treat it as
+   a critical ambiguity and ask before planning. Never silently decide that a
+   behavior change will ship without automated tests.
+5. Identify ambiguities or missing information. If critical details are
    missing, add one comment to the source issue that:
    - Mentions the issue author as `@<ISSUE_AUTHOR>`.
    - Lists only the concrete questions needed to clarify the intended behavior.
@@ -183,7 +193,9 @@ One real, concise example from the repository and the conventions it demonstrate
 
 ## Testing Strategy
 
-Test levels, locations, and focused commands appropriate for the change.
+Automated test levels, locations, RED and GREEN focused commands, and full-suite
+commands appropriate for the change. Manual checks may supplement but never
+replace automated tests for behavior changes.
 
 ## Boundaries
 
@@ -298,6 +310,13 @@ item with `[x]` in the same atomic commit, and resumes from the first unchecked
 task after a failure. Tasks must follow the dependency graph, be vertical
 slices where possible, include acceptance criteria and verification, and stay
 XS, S, or M; break down L or XL work before creating the plan.
+
+Every behavior-changing task MUST include its automated focused test in the
+same task and describe the RED -> GREEN sequence. Do not defer all tests to a
+later task, and do not use lint, type checking, build success, or a manual check
+as evidence that the behavior itself works. Pure documentation or
+configuration changes may use their native validator when there is no runtime
+behavior to exercise.
 
 Adapt both files to what you find in the repository; do not invent structure
 that contradicts existing documentation.

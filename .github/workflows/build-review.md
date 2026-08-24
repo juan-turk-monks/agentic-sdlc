@@ -33,7 +33,11 @@ safe-outputs:
     target: "*"
     required-title-prefix: "[build] "
     required-labels: ["ai-generated"]
-    protected-files: blocked
+    protected-files:
+      policy: blocked
+      exclude:
+        - package.json
+        - pnpm-lock.yaml
 ---
 
 # Build Review — Submitted Review Update
