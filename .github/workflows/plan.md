@@ -18,6 +18,48 @@ permissions:
   issues: read
   copilot-requests: write
 
+jobs:
+  mark-planning:
+    runs-on: ubuntu-slim
+    permissions:
+      issues: write
+    steps:
+      - name: Mark issue as planning
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const issueNumber = Number(
+              context.payload.issue?.number ?? context.payload.inputs?.issue_id,
+            );
+
+            if (!Number.isInteger(issueNumber) || issueNumber <= 0) {
+              throw new Error(
+                "A positive issue number is required to start planning.",
+              );
+            }
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              labels: ["agent:planning"],
+            });
+
+            const { data: labels } = await github.rest.issues.listLabelsOnIssue({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+            });
+
+            if (labels.some((label) => label.name === "agent:plan")) {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                name: "agent:plan",
+              });
+            }
+
 skills:
   - .github/skills/spec-driven-development
   - .github/skills/planning-and-task-breakdown
@@ -30,9 +72,9 @@ safe-outputs:
   add-comment:
     max: 1
   add-labels:
-    allowed: ["agent:planning"]
+    allowed: ["agent:plan-finished"]
   remove-labels:
-    allowed: ["agent:plan"]
+    allowed: ["agent:planning"]
   create-pull-request:
     title-prefix: "[spec] "
     labels: ["agent:planning", "spec"]
@@ -66,12 +108,8 @@ Fetch the issue using the GitHub tools (or `gh issue view`) before continuing.
 
 ## Step 1 — Start work
 
-Immediately mark that planning has started on the target issue:
-
-1. Add label `agent:planning`
-2. Remove label `agent:plan`
-
-Do this FIRST, before any analysis, so humans can see the state change.
+The deterministic `mark-planning` job has already added `agent:planning` and
+removed `agent:plan` before you started. Do not request either label change.
 
 ## Step 2 — Understand the issue
 
@@ -245,5 +283,8 @@ that contradicts existing documentation.
 2. Create a pull request titled `[spec] <short title>` whose body:
    - Links the source issue (`Refs #<ISSUE_NUMBER>`).
    - Contains a summary of the SPEC and the implementation phases.
+3. Only after requesting that pull request, remove `agent:planning` from the
+   source issue and add `agent:plan-finished`. For both safe-output requests,
+   target the source issue explicitly with `item_number: <ISSUE_NUMBER>`.
 
 Do not modify any other files. Do not implement the feature itself.
