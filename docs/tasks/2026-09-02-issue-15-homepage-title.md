@@ -49,7 +49,7 @@ suite.
 
 #### T2: Update the metadata title in `app/layout.tsx`
 
-- [ ] Implement T2
+- [x] Implement T2
 - Description: Change `metadata.title` in `app/layout.tsx` from
   `"Create Next App"` to `"Agentic SLDC"`, leaving `description` and all
   other layout code unchanged.
@@ -64,7 +64,7 @@ suite.
 
 ### Checkpoint: Title change with RED/GREEN e2e coverage
 
-- [ ] Required focused verification passes (`pnpm exec playwright test
+- [x] Required focused verification passes (`pnpm exec playwright test
       e2e/title.spec.ts` is GREEN)
 - [ ] Human review is complete before continuing when the SPEC requires it
 
