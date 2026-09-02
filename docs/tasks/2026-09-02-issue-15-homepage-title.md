@@ -31,7 +31,7 @@ suite.
 
 #### T1: Write RED end-to-end test for the homepage title
 
-- [ ] Implement T1
+- [x] Implement T1
 - Description: Add `e2e/title.spec.ts` that navigates to the homepage (`/`)
   and asserts the document title equals "Agentic SLDC" using Playwright's
   `toHaveTitle` matcher. This test MUST fail against the current
