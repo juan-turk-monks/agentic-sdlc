@@ -72,7 +72,7 @@ suite.
 
 #### T3: Run full lint, type-check, build, and e2e suite
 
-- [ ] Implement T3
+- [x] Implement T3
 - Description: Run the complete set of repository validation commands to
   confirm the title change does not regress linting, type-checking, the
   production build, or the existing Playwright suite (including
@@ -82,10 +82,16 @@ suite.
   - The full Playwright suite (`e2e/counter.spec.ts` and `e2e/title.spec.ts`)
     passes.
 - Verification:
-  - `pnpm lint`
-  - `pnpm exec tsc --noEmit`
-  - `pnpm build`
-  - `pnpm exec playwright test`
+  - `pnpm lint` — PASS
+  - `pnpm exec tsc --noEmit` — PASS
+  - `pnpm build` — fails with a Google Fonts network fetch error
+    (`Failed to fetch Geist/Geist Mono from Google Fonts`) that is
+    pre-existing and unrelated to this change: it reproduces identically on
+    the pre-change baseline commit (`app/layout.tsx` before this SPEC) in
+    this sandboxed environment, which blocks outbound access to
+    `fonts.googleapis.com`. Not caused by the title change.
+  - `pnpm exec playwright test` — PASS (both `e2e/counter.spec.ts` and
+    `e2e/title.spec.ts`)
 - Dependencies: T2
 - Files likely touched: none (verification only)
 - Estimated scope: XS
